@@ -1,3 +1,9 @@
+# Welcome to my-app!
+This is the capstone React project for the [Meta Front-End Developer Professional Certificate]
+(https://www.coursera.org/professional-certificates/meta-front-end-developer). Please feel free to leave
+comments, make pull requests, or just contact/connect with me directly! 
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
