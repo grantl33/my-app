@@ -1,0 +1,59 @@
+section.hero {
+    background-color: #495e57;
+    background-blend-mode: luminosity;
+    background-image: url(../../assets/bg/3.png);
+    background-size: cover;
+}
+
+section.hero .content {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 300px auto;
+    grid-template-areas: "heroright" "heroleft";
+    max-width: 1320px;
+    margin: 0 auto;
+}
+
+section.hero .content .left {
+    grid-area: heroleft;
+    padding: 32px;
+    margin: 0;
+}
+
+section.hero .content .right {
+    grid-area: heroright;
+    background-image: url('../../assets/tapas_lg.jpg');
+    background-position: center;
+    background-size: cover;
+}
+
+section.hero p {
+    margin: 16px 0 32px 0;
+    color: white;
+    font-size: large;
+}
+
+@media (min-width: 680px) {
+    section.hero .content {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto;
+        grid-template-areas: "heroleft heroright";
+        width: 100%;
+        min-height: 400px
+    }
+
+    section.hero .content .left {
+        margin: 0 0 0 32px;
+    }
+
+    section.hero .buttonlink {
+        display: inline;
+        text-align: left;
+    }
+}
+
+@media (min-width: 960px) {
+    section.hero .content .left {
+        margin: 0 0 0 96px;
+    }
+}

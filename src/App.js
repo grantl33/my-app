@@ -1,14 +1,12 @@
 import './App.css';
-import Nav from './Nav';
 import Main from './Main';
-import Header from './Header';
-import Footer from './Footer';
+import Header from './components/Header';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <>
       <Header />
-      <Nav />
       <Main />
       <Footer />
     </>

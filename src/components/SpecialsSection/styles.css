@@ -1,0 +1,123 @@
+section.specials {
+    background-color: #edefee;
+    padding: 16px 0 32px 0;
+}
+
+section.specials .content {
+    margin: 0 auto;
+    max-width: 1320px;
+}
+
+section.specials .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 32px;
+    gap: 32px;
+}
+
+section.specials .card {
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    filter: drop-shadow(rgba(0, 0, 0, 0.25) 2px 2px 8px);
+    min-height: 425px;
+}
+
+section.specials .mainimage-mask {
+    width: 100%;
+    min-height: 225px;
+    overflow: hidden;
+}
+
+section.specials .mainimage {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    min-height: 225px;
+    scale: 110%;
+    transition: scale 500ms;
+}
+
+section.specials .card:hover .mainimage {
+    scale: 100%;
+    transition: scale 500ms;
+}
+
+section.specials .card-content {
+    padding: 16px;
+}
+
+section.specials .headline {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-template-areas: "name price";
+    font-weight: 600;
+    font-size: large;
+    width: 100%;
+}
+
+section.specials .headline .name {
+    grid-area: name;
+    text-align: left;
+}
+
+section.specials .headline .price {
+    grid-area: price;
+    text-align: right;
+}
+
+section.specials p {
+    margin: 16px 0 32px 0;
+    color: black;
+    font-size: large;
+}
+
+section.specials .order {
+    display: inline-block;
+    text-decoration: none;
+    background-image: url('../../assets/bicycle.svg');
+    background-size: 32px;
+    background-repeat: no-repeat;
+    background-position-x: calc(100% - 8px);
+    padding: 8px 48px 8px 8px;
+    border-radius: 8px;
+    background-color: #edefee;
+    font-weight: 600;
+    color: #495e57;
+}
+
+section.specials .order:hover {
+    color: black;
+    filter: invert();
+}
+
+@media (min-width: 680px) {
+    section.specials .row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "div div";
+    }
+
+    section.specials .sectiontitle {
+        margin: 16px 64px;
+    }
+
+    section.specials .row {
+        margin: 16px 64px;
+    }
+}
+
+@media (min-width: 960px) {
+    section.specials .row {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: "div div div";
+    }
+
+    section.specials .sectiontitle {
+        margin: 16px 128px;
+    }
+
+    section.specials .row {
+        margin: 16px 128px;
+    }
+}

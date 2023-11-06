@@ -1,0 +1,121 @@
+section.testimonials {
+    background-color: #f4ce14;
+    padding: 16px 0 32px 0;
+    background-blend-mode: overlay;
+    background-image: url(../../assets/bg/6.png);
+    background-size: cover;
+}
+
+section.testimonials .content {
+    margin: 0 auto;
+    max-width: 1320px;
+}
+
+section.testimonials .row {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    margin: 16px 32px;
+    gap: 32px;
+}
+
+section.testimonials .card {
+    background-color: white;
+    border-radius: 16px;
+    overflow: hidden;
+    filter: drop-shadow(rgba(0, 0, 0, 0.25) 2px 2px 8px);
+    min-height: 400px;
+}
+
+section.testimonials .card .testimonial-image {
+    width: 100%;
+    min-height: 200px;
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.75);
+}
+
+section.testimonials .card .reviewer-pic {
+    width: 128px;
+    height: 128px;
+    border-radius: 65px;
+    border: white 3px solid;
+    filter: drop-shadow(rgba(0, 0, 0, 0.5) 2px 2px 4px);
+    background-size: cover;
+    background-position: center;
+    margin: -96px auto 16px auto;
+    scale: 90%;
+    transition: scale 500ms;
+}
+
+section.testimonials .card:hover .reviewer-pic {
+    transition: scale 500ms;
+    scale: 100%;
+}
+
+section.testimonials .card .content {
+    font-size: large;
+    text-align: center;
+    padding: 0 8px 8px 8px;
+}
+
+section.testimonials .card .reviewer {
+    font-weight: 600;
+    font-size: x-large;
+}
+
+section.testimonials .card .reviewer {
+    font-weight: 600;
+    font-size: x-large;
+}
+
+section.testimonials .card p {
+    margin: 8px 0;
+}
+
+section.testimonials .card .stars {
+    font-weight: 600;
+    font-size: large;
+}
+
+section.testimonials .card .stars img {
+    width: 16px;
+    height: 16px;
+}
+
+@media (min-width: 680px) {
+    section.testimonials .row {
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas: "div div";
+    }
+
+    section.testimonials .sectiontitle {
+        margin: 16px 64px;
+    }
+
+    section.testimonials .row {
+        margin: 16px 64px;
+    }
+}
+
+@media (min-width: 960px) {
+    section.testimonials .row {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-areas: "div div div";
+    }
+
+    section.testimonials .sectiontitle {
+        margin: 16px 128px;
+    }
+
+    section.testimonials .row {
+        margin: 16px 128px;
+    }
+}
+
+@media (min-width: 1200px) {
+    section.testimonials .row {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-areas: "div div div div";
+    }
+}
