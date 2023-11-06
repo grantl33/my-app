@@ -1,38 +1,78 @@
-.App {
+main {
+  grid-area: "main";
+  background-color: whitesmoke;
+}
+
+.buttonlink {
+  padding: 8px 32px;
+  color: white;
+  background-color: black;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  font-size: large;
+  text-decoration: none;
+  display: block;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.buttonlink:hover {
+  color: #f4ce14;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.actionlink {
+  padding: 8px 32px;
+  color: black;
+  background-color: #f4ce14;
+  font-weight: 600;
+  border-radius: 8px;
+  border: none;
+  font-size: large;
+  text-decoration: none;
+  display: block;
+  text-align: center;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.actionlink:hover {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+
+h1,
+h2 {
+  color: #f4ce14;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+  font-family: Georgia, serif;
+  font-size: xxx-large;
+  ;
+}
+
+h2 {
+  font-size: x-large;
+  text-transform: uppercase;
+}
+
+section .sectiontitle {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-areas: "sectionname sectionaction";
+  margin: 16px 32px;
+}
+
+section .sectiontitle .name {
+  grid-area: sectionname;
+  font-family: Georgia, serif;
+  font-weight: 600;
+  font-size: xx-large;
+  color: #495e57;
+}
+
+section .sectiontitle .action {
+  grid-area: sectionaction;
+  height: 100%;
+  display: flex;
+  justify-content: right;
+  align-items: center;
 }
