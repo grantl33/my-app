@@ -88,7 +88,7 @@ nav a:hover {
     filter: opacity(1);
 }
 
-nav a.selected {
+nav a.active {
     text-decoration: underline;
     filter: opacity(1);
 }
