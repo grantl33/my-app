@@ -1,12 +1,13 @@
+import { NavLink } from "react-router-dom";
+
 function Nav() {
     return (
         <nav>
-            {/* Placeholder, use router here */}
-            <a href="/" title="Home" className="selected">Home</a>
-            <a href="/" title="About">About</a>
-            <a href="/" title="Menu">Menu</a>
-            <a href="/" title="Reservations">Reservations</a>
-            <a href="/" title="Login">Login</a>
+            <NavLink to="/">Home</NavLink>
+            <NavLink to="/about">About</NavLink>
+            <NavLink to="/menu">Menu</NavLink>
+            <NavLink to="/reservations" data-testid="nav-reservations">Reservations</NavLink>
+            <NavLink to="/login">Login</NavLink>
         </nav>
     )
 }

@@ -1,3 +1,4 @@
+import { NavLink } from 'react-router-dom';
 import './styles.css';
 
 function HeroSection() {
@@ -11,7 +12,7 @@ function HeroSection() {
                         We serve delicious food made with fresh, high-quality ingredients.
                         Come dine with us today!
                     </p>
-                    <a href="/" role="button" className="buttonlink">Reservations</a>
+                    <NavLink to="/reservations" className="buttonlink">Reservations</NavLink>
                 </div>
                 <div className="right"></div>
             </div>
