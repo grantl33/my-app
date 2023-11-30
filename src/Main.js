@@ -13,7 +13,7 @@ function getAPI(entityName, entityId) {
         : ""
     return (isNotBlank(entityId))
         ? `${baseUrl}/data-api/rest/${entityName}/Id/${entityId}`
-        : `${baseUrl}/data-api/rest/${entityName}/`;
+        : `${baseUrl}/data-api/rest/${entityName}`;
 }
 
 // Main reducer logic
