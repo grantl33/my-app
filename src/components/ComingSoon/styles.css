@@ -2,7 +2,10 @@
     display: grid;
     margin: 16px auto;
     max-width: 360px;
-
+    background-color: white;
+    margin: 32px auto;
+    border-radius: 16px;
+    justify-content: center;
 }
 
 .coming-soon .coming-soon-content {
