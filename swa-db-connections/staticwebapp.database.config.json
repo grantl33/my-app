@@ -31,21 +31,8 @@
     }
   },
   "entities": {
-    "Reservations": {
-      "source": "dbo.Reservations",
-      "rest": true,
-      "permissions": [
-        {
-          "actions": [
-            "*"
-          ],
-          "role": "anonymous"
-        }
-      ]
-    },
-    "MyReservations": {
-      "source": "dbo.MyReservations",
-      "rest": true,
+    "MyTestEntityTable": {
+      "source": "dbo.MyTestEntityTable",
       "permissions": [
         {
           "actions": [
@@ -57,7 +44,6 @@
     },
     "Person": {
       "source": "dbo.MyTestPersonTable",
-      "rest": true,
       "permissions": [
         {
           "actions": [
