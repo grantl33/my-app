@@ -31,28 +31,6 @@
     }
   },
   "entities": {
-    "Reservations": {
-      "source": "dbo.Reservations",
-      "permissions": [
-        {
-          "actions": [
-            "*"
-          ],
-          "role": "anonymous"
-        }
-      ]
-    },
-    "MyReservations": {
-      "source": "dbo.MyReservations",
-      "permissions": [
-        {
-          "actions": [
-            "*"
-          ],
-          "role": "anonymous"
-        }
-      ]
-    },
     "Person": {
       "source": "dbo.MyTestPersonTable",
       "permissions": [
