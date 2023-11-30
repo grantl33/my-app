@@ -1,0 +1,28 @@
+.loading {
+    display: inline-flex;
+    align-items: center;
+    margin-left: 4px;
+    gap: 4px;
+}
+
+.spinner {
+    display: inline-flex;
+    border-top: 3px solid skyblue;
+    border-right: 3px solid skyblue;
+    border-left: 3px solid skyblue;
+    border-bottom: 3px solid white;
+    border-radius: 12px;
+    width: 12px;
+    height: 12px;
+    animation: rotating 1s linear infinite;
+}
+
+@keyframes rotating {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

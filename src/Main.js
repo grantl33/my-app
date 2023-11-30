@@ -1,72 +1,137 @@
 import { Routes, Route } from "react-router-dom";
 import HomePage from "./components/HomePage";
+import About from "./components/About";
+import Menu from "./components/Menu";
+import Login from "./components/Login";
 import Reservations from "./components/Reservations";
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
+import { isNotBlank } from "./utils";
 
-export const WEEKEND_AVAILABLE_TIMES = [
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00"
-];
-
-export const WEEKDAY_AVAILABLE_TIMES = [
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-];
-
-// Available times are determined by whether it is a weekend
-function getAvailableTimes(dateObj) {
-    const dayOfWeek = dateObj.getDay();
-    const isWeekend = (dayOfWeek === 6 || dayOfWeek === 0);
-    return {
-        availableTimes: (isWeekend)
-            ? WEEKEND_AVAILABLE_TIMES
-            : WEEKDAY_AVAILABLE_TIMES
-    }
+function getAPI(entityName, entityId) {
+    const baseUrl = (window.location.hostname === "localhost")
+        ? "http://localhost:4280" // dev server
+        : ""
+    return (isNotBlank(entityId))
+        ? `${baseUrl}/data-api/rest/${entityName}/Id/${entityId}`
+        : `${baseUrl}/data-api/rest/${entityName}/`;
 }
-// Initial value will be based on today's date
-function initializeTimes() {
-    return getAvailableTimes(new Date());
-}
-// This is the reducer logic and there is an action to updateTimes 
-// whenever the selectedDate changes
-function updateTimes(state, action) {
+
+// Main reducer logic
+const mainReducer = (state, action) => {
     switch (action.type) {
-        case "updateTimes":
-            // date value format: "yyyy-mm-dd"
-            const dateParts = action.selectedDate.split("-");
-            const dateObj = new Date();
-            dateObj.setDate(dateParts[2]);
-            dateObj.setMonth(dateParts[1] - 1);
-            dateObj.setFullYear(dateParts[0]);
-            const updatedValues = getAvailableTimes(dateObj);
+        case "setLoadingAvailableTimes":
             const returnObj = {
                 ...state,
-                ...updatedValues
+                ...{
+                    loadingAvailableTimes: action.loadingAvailableTimes
+                }
             };
             return returnObj;
+        case "setAvailableTimes":
+            return {
+                ...state,
+                ...{
+                    availableTimes: action.availableTimes,
+                    loadingAvailableTimes: false,
+                }
+            };
+        case "setSavingReservation":
+            return {
+                ...state,
+                ...{
+                    savingReservation: action.savingReservation,
+                }
+            };
         default:
             throw new Error(`Unknown action: ${action.type}`);
     }
 }
+
 function Main() {
-    const [main, dispatch] = useReducer(updateTimes, initializeTimes());
-    const { availableTimes } = main;
+    const [main, dispatch] = useReducer(mainReducer, {
+        availableTimes: [],
+        loadingAvailableTimes: false,
+        savingReservation: false
+    });
+    const {
+        availableTimes,
+        loadingAvailableTimes,
+        savingReservation
+    } = main;
+
+    useEffect(() => {
+        loadAvailableReservations();
+    }, []);
+
+    const loadAvailableReservations = (selectedDate) => {
+        // load available reservations from database and set via reducer
+        dispatch({
+            type: "setLoadingAvailableTimes",
+            loadingAvailableTimes: true
+        });
+
+        fetch(getAPI("Reservations"))
+            .then((response) => response.json())
+            .then((jsonData) => {
+                // usually the api would return the filtered results
+                const availableReservations = jsonData.value || [];
+                const availableTimes = availableReservations.filter((reservationObj) => {
+                    return reservationObj.ReservationDate === selectedDate;
+                }).sort((a, b) => {
+                    return a < b ? -1 : 1
+                });
+                dispatch({
+                    type: "setAvailableTimes",
+                    availableTimes
+                });
+            })
+            .catch((error) => console.log(error));
+    }
+
+    const submitReservation = (reservationData) => {
+        dispatch({
+            type: "setSavingReservation",
+            savingReservation: true
+        });
+
+        fetch(getAPI("MyReservations"), {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(reservationData)
+        })
+            .then((response) => response.json())
+            .then((jsonData) => {
+                dispatch({
+                    type: "setSavingReservation",
+                    savingReservation: false
+                });
+                if (jsonData.error) {
+                    console.log("Error", JSON.stringify(jsonData.error));
+                    throw new Error();
+                }
+                alert("Your reservation is confirmed, thank you!");
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("There was an error saving your reservation, please try again.");
+            });
+    }
 
     return (
         <main>
             <Routes>
                 <Route path="/" element={<HomePage />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/menu" element={<Menu />} />
                 <Route path="/reservations" element={
                     <Reservations
                         availableTimes={availableTimes}
-                        dispatch={dispatch}
+                        dateChangeHandler={loadAvailableReservations}
+                        submitReservationHandler={submitReservation}
+                        loadingAvailableTimes={loadingAvailableTimes}
+                        savingReservation={savingReservation}
                     />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </main>
     )

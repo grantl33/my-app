@@ -46,7 +46,6 @@ h2 {
 h1 {
   font-family: Georgia, serif;
   font-size: xxx-large;
-  ;
 }
 
 h2 {
@@ -75,4 +74,35 @@ section .sectiontitle .action {
   display: flex;
   justify-content: right;
   align-items: center;
+}
+
+input,
+select {
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: large;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  padding: 2px 4px;
+  ;
+}
+
+input[type='submit'] {
+  color: white;
+  background-color: #495e57;
+  padding: 4px 16px;
+  border: 0;
+  font-weight: 600;
+}
+
+.coming-soon {
+  display: grid;
+  margin: 16px auto;
+  max-width: 360px;
+
+}
+
+.coming-soon .coming-soon-content {
+  display: grid;
+  margin: 16px;
 }

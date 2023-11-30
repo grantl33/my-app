@@ -1,5 +1,81 @@
-.reservations form {
+.reservations .reservations-container {
     display: grid;
-    max-width: 200px;
-    gap: 20px;
+    max-width: 600px;
+    margin: 32px 16px;
+    background-color: white;
+    border-radius: 16px;
+}
+
+@media (min-width: 600px) {
+    .reservations .reservations-container {
+        margin: 32px auto;
+    }
+}
+
+.reservations .reservations-form {
+    margin: 32px;
+}
+
+.reservations .reservations-form form {
+    display: grid;
+    grid-template-rows: auto;
+    gap: 16px;
+}
+
+.reservations .reservations-form label {
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.reservations h2 {
+    margin-bottom: 8px;
+}
+
+.reservations .reservations-form .form-row {
+    display: grid;
+    align-items: center;
+    gap: 8px;
+}
+
+
+@media (min-width: 600px) {
+    .reservations .reservations-form .form-row {
+        display: inline-flex;
+        align-items: center;
+    }
+}
+
+.step-number {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    color: white;
+    background-color: #f4ce14;
+    align-items: center;
+    justify-content: center;
+    font-size: x-large;
+    font-weight: 600;
+    border-radius: 18px;
+    margin-right: 8px;
+}
+
+.reservations .reservations-form input,
+.reservations .reservations-form select {
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: large;
+    background-color: whitesmoke;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 2px 4px;
+    ;
+}
+
+.reservations .reservations-form input[type='submit'] {
+    color: white;
+    background-color: black;
+    padding: 8px 32px;
+    border: 0;
+    font-weight: 600;
 }

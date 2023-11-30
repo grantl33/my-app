@@ -1,0 +1,11 @@
+.coming-soon {
+    display: grid;
+    margin: 16px auto;
+    max-width: 360px;
+
+}
+
+.coming-soon .coming-soon-content {
+    display: grid;
+    margin: 16px;
+}
