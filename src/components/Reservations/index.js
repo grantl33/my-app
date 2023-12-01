@@ -8,6 +8,7 @@ import {
 import LoadingSpinner from "../LoadingSpinner";
 import chevronup from "../../assets/chevron-up.svg";
 import chevrondown from "../../assets/chevron-down.svg";
+import trash from "../../assets/trash3-fill.svg";
 
 const OCCASIONS = [
     "Birthday",
@@ -106,7 +107,7 @@ function Reservations(props) {
                                     )
                                 })}
                             </select>
-                            {(loadingAvailableTimes) && <LoadingSpinner />}
+                            {(loadingAvailableTimes) && <LoadingSpinner showText />}
                         </div>
                         <div className="form-row">
                             <label htmlFor="guests">
@@ -149,7 +150,7 @@ function Reservations(props) {
                 <div className="reservations-list">
                     {showReservationList &&
                         <>
-                            {loadingGuestReservations && <LoadingSpinner />}
+                            {loadingGuestReservations && <LoadingSpinner showText />}
                             {!loadingGuestReservations &&
                                 <div className="reservations-list-row header">
                                     <div>Id</div>
@@ -172,19 +173,24 @@ function Reservations(props) {
                                     <div>{item.ReservationTime}</div>
                                     <div>{item.Guests}</div>
                                     <div>{item.Occasion}</div>
-                                    <div><input type="button" value="Delete"
-                                        disabled={(deletingReservation && deletingReservationId === item.Id)}
-                                        onClick={(e) => {
-                                            deleteReservationHandler(item.Id)
-                                        }} /></div>
+                                    <div>
+                                        {(deletingReservation && deletingReservationId === item.Id)
+                                            && <><LoadingSpinner /></>}
+                                        {(!deletingReservation || deletingReservationId !== item.Id)
+                                            && <img src={trash} alt=""
+                                                className="delete-icon"
+                                                onClick={(e) => {
+                                                    deleteReservationHandler(item.Id)
+                                                }} />}
+                                    </div>
                                 </div>
                             )}
                         </>
                     }
                 </div>
             </div>
-        </div>
-    )
+            )
+        </div>)
 }
 
 export default Reservations;

@@ -1,9 +1,14 @@
 import "./styles.css";
 
-function LoadingSpinner() {
+function LoadingSpinner(props) {
+    const { showText } = props;
+    const text = (showText)
+        ? <>Loading…</>
+        : ""
     return (
         <span className="loading">
-            <span className="spinner"></span> Loading…
+            <span className="spinner"></span>
+            {text}
         </span>
     )
 }

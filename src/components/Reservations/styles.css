@@ -100,7 +100,7 @@
 
 .reservations .reservations-list-row {
     display: grid;
-    grid-template-columns: 5% 20% 15% 15% 25% 1fr;
+    grid-template-columns: 5% 20% 15% 15% 1fr auto;
     gap: 8px;
     align-items: center;
 }
@@ -113,6 +113,11 @@
     margin: 2px 4px;
     white-space: nowrap;
 }
+
+.reservations .reservations-list-row div:last-child {
+    margin: 2px 4px;
+}
+
 
 .reservations .emptyset {
     display: grid;
@@ -136,20 +141,18 @@
     background-color: #ccc;
 }
 
-.reservations input[type='button'] {
-    color: white;
-    background-color: black;
-    font-size: small;
-    padding: 4px 8px;
-    border: 0;
-    font-weight: 600;
+.reservations input[type='submit']:hover {
+    color: #f4ce14;
 }
 
-.reservations input[type='button']:hover {
-    background-color: darkred;
+
+.reservations .delete-icon {
+    width: 16px;
+    height: 16px;
+    opacity: 0.5;
+    cursor: pointer;
 }
 
-.reservations input[type='button']:disabled {
-    background-color: #eee;
-    color: #ccc;
+.reservations .delete-icon:hover {
+    opacity: 1.0;
 }
