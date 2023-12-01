@@ -5,7 +5,7 @@ import Menu from "./components/Menu";
 import Login from "./components/Login";
 import Reservations from "./components/Reservations";
 import { useEffect, useReducer } from "react";
-import { isNotBlank } from "./utils";
+import { isNotBlank, getTodaysDate } from "./utils";
 
 function getAPI(entityName, entityId) {
     const baseUrl = (window.location.hostname === "localhost")
@@ -123,9 +123,21 @@ function Main() {
                 }).sort((a, b) => {
                     return a < b ? -1 : 1
                 });
+                // always include by default
+                const defaultTimes = [
+                    {
+                        ReservationDatetime: `${getTodaysDate()}T09:00:00`,
+                        ReservationDate: getTodaysDate(),
+                        ReservationTime: "09:00:00"
+                    },
+                    {
+                        ReservationDatetime: `${getTodaysDate()}T09:30:00`,
+                        ReservationDate: getTodaysDate(),
+                        ReservationTime: "09:30:00"
+                    }];
                 dispatch({
                     type: "setAvailableTimes",
-                    availableTimes
+                    availableTimes: [...defaultTimes, ...availableTimes]
                 });
             })
             .catch((error) => console.log(error));
