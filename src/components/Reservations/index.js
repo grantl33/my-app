@@ -6,6 +6,8 @@ import {
     getTodaysDatetime,
 } from "../../utils";
 import LoadingSpinner from "../LoadingSpinner";
+import chevronup from "../../assets/chevron-up.svg";
+import chevrondown from "../../assets/chevron-down.svg";
 
 const OCCASIONS = [
     "Birthday",
@@ -20,6 +22,11 @@ function Reservations(props) {
         dateChangeHandler,
         submitReservationHandler,
         loadingAvailableTimes,
+        guestReservations,
+        loadingGuestReservations,
+        deleteReservationHandler,
+        deletingReservation,
+        deletingReservationId
     } = props;
     const todaysDate = getTodaysDate();
     const [resDate, setResDate] = useState(todaysDate);
@@ -27,6 +34,7 @@ function Reservations(props) {
     const [resGuests, setResGuests] = useState(2);
     const [resOccasion, setResOccasion] = useState(OCCASIONS[0]);
     const [valid, setValid] = useState(false);
+    const [showReservationList, setShowReservationListVisible] = useState(false);
 
     useEffect(() => {
         const firstTime = availableTimes !== null && availableTimes.length > 0
@@ -37,13 +45,17 @@ function Reservations(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         const reservationData = {
-            ReservationDate: resDate,
-            ReservationTime: resTime,
+            ReservationDatetime: `${resDate} ${resTime}`,
             Guests: resGuests,
             Occasion: resOccasion,
             CreatedOn: getTodaysDatetime()
         }
         submitReservationHandler(reservationData);
+    }
+
+    const handleToggleReservations = (e) => {
+        setShowReservationListVisible(!showReservationList);
+        e.preventDefault();
     }
 
     useEffect(() => {
@@ -52,10 +64,8 @@ function Reservations(props) {
             resGuests > 0 &&
             isNotBlank(resOccasion);
         setValid(allFieldsHaveValues);
-        console.log("allFieldsHaveValues", allFieldsHaveValues);
     }, [resDate, resTime, resGuests, resOccasion]);
 
-    console.log("valid", valid);
     return (
         <div className="reservations">
             <div className="reservations-container">
@@ -88,7 +98,8 @@ function Reservations(props) {
                                 }>
                                 <option key={-1} data-testid="res-time-option" disabled>Please Select</option>
                                 {availableTimes && availableTimes.map((item) => {
-                                    const timeParts = item.ReservationTime.split(":");
+                                    const datetimeParts = item.ReservationDatetime.split("T");
+                                    const timeParts = datetimeParts[1].split(":");
                                     const timeString = `${timeParts[0]}:${timeParts[1]}`
                                     return (
                                         <option key={item.Id} data-testid="res-time-option">{timeString}</option>
@@ -125,6 +136,51 @@ function Reservations(props) {
                                 onClick={handleSubmit} />
                         </div>
                     </form>
+                </div>
+            </div>
+            <div className="reservations-container">
+                <div className="reservations-list-header">
+                    <h2>Existing Reservations</h2>
+                    <img src={(showReservationList) ? chevronup : chevrondown}
+                        className="toggleicon"
+                        onClick={handleToggleReservations}
+                        alt="" />
+                </div>
+                <div className="reservations-list">
+                    {showReservationList &&
+                        <>
+                            {loadingGuestReservations && <LoadingSpinner />}
+                            {!loadingGuestReservations &&
+                                <div className="reservations-list-row header">
+                                    <div>Id</div>
+                                    <div>Date</div>
+                                    <div>Time</div>
+                                    <div>Guests</div>
+                                    <div>Occasion</div>
+                                    <div></div>
+                                </div>
+                            }
+                            {(!loadingGuestReservations && guestReservations.length === 0) &&
+                                <div className="emptyset">
+                                    <span>No reservations.</span>
+                                </div>
+                            }
+                            {(!loadingGuestReservations && guestReservations.length > 0) && guestReservations.map((item) =>
+                                <div className="reservations-list-row data" key={item.Id}>
+                                    <div>{item.Id}</div>
+                                    <div>{item.ReservationDate}</div>
+                                    <div>{item.ReservationTime}</div>
+                                    <div>{item.Guests}</div>
+                                    <div>{item.Occasion}</div>
+                                    <div><input type="button" value="Delete"
+                                        disabled={(deletingReservation && deletingReservationId === item.Id)}
+                                        onClick={(e) => {
+                                            deleteReservationHandler(item.Id)
+                                        }} /></div>
+                                </div>
+                            )}
+                        </>
+                    }
                 </div>
             </div>
         </div>

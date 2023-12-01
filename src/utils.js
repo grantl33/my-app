@@ -1,5 +1,5 @@
 export function isBlank(value) {
-    return value === null || value === undefined || value.trim() === "";
+    return value === null || value === undefined || `${value}`.trim() === "";
 }
 
 export function isNotBlank(value) {
@@ -8,7 +8,7 @@ export function isNotBlank(value) {
 
 export function getTodaysDate() {
     const today = new Date();
-    return `${today.getUTCFullYear()}-${today.getUTCMonth() + 1}-${today.getUTCDate()}`;
+    return `${today.getFullYear()}-${zeroPad(today.getMonth() + 1)}-${zeroPad(today.getDate())}`;
 }
 
 export function getTodaysDatetime() {

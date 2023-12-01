@@ -42,6 +42,30 @@ const mainReducer = (state, action) => {
                     savingReservation: action.savingReservation,
                 }
             };
+        case "setGuestReservations":
+            return {
+                ...state,
+                ...{
+                    guestReservations: action.guestReservations,
+                    loadingGuestReservations: false,
+                }
+            };
+        case "setLoadingGuestReservations":
+            return {
+                ...state,
+                ...{
+                    loadingGuestReservations: action.loadingGuestReservations,
+                }
+            };
+        case "setDeletingReservation":
+            return {
+                ...state,
+                ...{
+                    deletingReservation: action.deletingReservation,
+                    deletingReservationId: action.deletingReservationId
+                }
+            };
+
         default:
             throw new Error(`Unknown action: ${action.type}`);
     }
@@ -51,16 +75,25 @@ function Main() {
     const [main, dispatch] = useReducer(mainReducer, {
         availableTimes: [],
         loadingAvailableTimes: false,
-        savingReservation: false
+        savingReservation: false,
+        guestReservations: [],
+        loadingGuestReservations: false,
+        deletingReservation: false,
+        deletingReservationId: null
     });
     const {
         availableTimes,
         loadingAvailableTimes,
-        savingReservation
+        savingReservation,
+        loadingGuestReservations,
+        guestReservations,
+        deletingReservation,
+        deletingReservationId
     } = main;
 
     useEffect(() => {
         loadAvailableReservations();
+        loadGuestReservations();
     }, []);
 
     const loadAvailableReservations = (selectedDate) => {
@@ -75,7 +108,17 @@ function Main() {
             .then((jsonData) => {
                 // usually the api would return the filtered results
                 const availableReservations = jsonData.value || [];
-                const availableTimes = availableReservations.filter((reservationObj) => {
+                const availableReservationDates = availableReservations.map((reservation) => {
+                    const datetimeParts = reservation.ReservationDatetime.split("T");
+                    return {
+                        ...reservation,
+                        ...{
+                            ReservationDate: datetimeParts[0],
+                            ReservationTime: datetimeParts[1]
+                        }
+                    }
+                });
+                const availableTimes = availableReservationDates.filter((reservationObj) => {
                     return reservationObj.ReservationDate === selectedDate;
                 }).sort((a, b) => {
                     return a < b ? -1 : 1
@@ -88,13 +131,45 @@ function Main() {
             .catch((error) => console.log(error));
     }
 
+
+    const loadGuestReservations = () => {
+        // load existing reservations from database and set via reducer
+        dispatch({
+            type: "setLoadingGuestReservations",
+            loadingGuestReservations: true
+        });
+
+        fetch(getAPI("GuestReservations"))
+            .then((response) => response.json())
+            .then((jsonData) => {
+                // usually the api would return the filtered results
+                const guestReservationsData = jsonData.value || [];
+                const guestReservations = guestReservationsData.map((reservation) => {
+                    const datetimeParts = reservation.ReservationDatetime.split("T");
+                    const timeParts = datetimeParts[1].split(":");
+                    return {
+                        ...reservation,
+                        ...{
+                            ReservationDate: datetimeParts[0],
+                            ReservationTime: `${timeParts[0]}:${timeParts[1]}`
+                        }
+                    }
+                });
+                dispatch({
+                    type: "setGuestReservations",
+                    guestReservations
+                });
+            })
+            .catch((error) => console.log(error));
+    }
+
     const submitReservation = (reservationData) => {
         dispatch({
             type: "setSavingReservation",
             savingReservation: true
         });
 
-        fetch(getAPI("MyReservations"), {
+        fetch(getAPI("GuestReservations"), {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(reservationData)
@@ -110,10 +185,40 @@ function Main() {
                     throw new Error();
                 }
                 alert("Your reservation is confirmed, thank you!");
+                loadGuestReservations();
             })
             .catch((error) => {
                 console.log(error);
                 alert("There was an error saving your reservation, please try again.");
+            });
+    }
+
+    const deleteReservation = (reservationId) => {
+        dispatch({
+            type: "setDeletingReservation",
+            deletingReservation: true,
+            deletingReservationId: reservationId
+        });
+
+        fetch(getAPI("GuestReservations", reservationId), {
+            method: "DELETE"
+        })
+            .then((response) => {
+                dispatch({
+                    type: "setDeletingReservation",
+                    deletingReservation: false,
+                    deletingReservationId: null
+                });
+                if (!response.ok) {
+                    console.log("Error", JSON.stringify(response));
+                    throw new Error();
+                }
+                alert("Your reservation has been deleted.");
+                loadGuestReservations();
+            })
+            .catch((error) => {
+                console.log(error);
+                alert("There was an error deleting your reservation, please try again.");
             });
     }
 
@@ -128,8 +233,13 @@ function Main() {
                         availableTimes={availableTimes}
                         dateChangeHandler={loadAvailableReservations}
                         submitReservationHandler={submitReservation}
+                        deleteReservationHandler={deleteReservation}
                         loadingAvailableTimes={loadingAvailableTimes}
                         savingReservation={savingReservation}
+                        guestReservations={guestReservations}
+                        loadingGuestReservations={loadingGuestReservations}
+                        deletingReservation={deletingReservation}
+                        deletingReservationId={deletingReservationId}
                     />} />
                 <Route path="/login" element={<Login />} />
             </Routes>

@@ -69,13 +69,87 @@
     border-radius: 8px;
     border: 1px solid #ccc;
     padding: 2px 4px;
-    ;
 }
 
-.reservations .reservations-form input[type='submit'] {
+.reservations .reservations-list-header {
+    margin: 32px 32px 8px 32px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: baseline;
+}
+
+.reservations .reservations-list-header .toggleicon {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.reservations .reservations-list {
+    margin: 0 32px 32px 32px;
+    display: grid;
+}
+
+.reservations .reservations-list-row.header {
+    color: white;
+    background-color: black;
+}
+
+.reservations .reservations-list-row.data:nth-child(odd) {
+    background-color: #eee;
+}
+
+.reservations .reservations-list-row {
+    display: grid;
+    grid-template-columns: 5% 20% 15% 15% 25% 1fr;
+    gap: 8px;
+    align-items: center;
+}
+
+.reservations .reservations-list-row.data:hover {
+    background-color: #ccc;
+}
+
+.reservations .reservations-list-row div {
+    margin: 2px 4px;
+    white-space: nowrap;
+}
+
+.reservations .emptyset {
+    display: grid;
+    background-color: #eee;
+    text-align: center;
+}
+
+.reservations .emptyset span {
+    margin: 16px;
+}
+
+.reservations input[type='submit'] {
     color: white;
     background-color: black;
     padding: 8px 32px;
     border: 0;
     font-weight: 600;
+}
+
+.reservations input[type='submit']:disabled {
+    background-color: #ccc;
+}
+
+.reservations input[type='button'] {
+    color: white;
+    background-color: black;
+    font-size: small;
+    padding: 4px 8px;
+    border: 0;
+    font-weight: 600;
+}
+
+.reservations input[type='button']:hover {
+    background-color: darkred;
+}
+
+.reservations input[type='button']:disabled {
+    background-color: #eee;
+    color: #ccc;
 }

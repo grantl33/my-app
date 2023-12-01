@@ -54,7 +54,18 @@
       ]
     },
     "Reservations": {
-      "source": "dbo.Reservation",
+      "source": "dbo.AvailableReservations",
+      "permissions": [
+        {
+          "actions": [
+            "*"
+          ],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "GuestReservations": {
+      "source": "dbo.GuestReservations",
       "permissions": [
         {
           "actions": [
