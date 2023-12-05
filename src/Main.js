@@ -106,6 +106,7 @@ function Main() {
         fetch(getAPI("Reservations"))
             .then((response) => response.json())
             .then((jsonData) => {
+                console.log("got some reservations", JSON.stringify(jsonData));
                 // usually the api would return the filtered results
                 const availableReservations = jsonData.value || [];
                 const availableReservationDates = availableReservations.map((reservation) => {
@@ -126,11 +127,13 @@ function Main() {
                 // always include by default
                 const defaultTimes = [
                     {
+                        Id: -100,
                         ReservationDatetime: `${getTodaysDate()}T09:00:00`,
                         ReservationDate: getTodaysDate(),
                         ReservationTime: "09:00:00"
                     },
                     {
+                        Id: -200,
                         ReservationDatetime: `${getTodaysDate()}T09:30:00`,
                         ReservationDate: getTodaysDate(),
                         ReservationTime: "09:30:00"
@@ -257,5 +260,9 @@ function Main() {
             </Routes>
         </main>
     )
+}
+
+export function TestingFn() {
+    return true;
 }
 export default Main;
