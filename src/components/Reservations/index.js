@@ -60,11 +60,13 @@ function Reservations(props) {
     }
 
     useEffect(() => {
-        const allFieldsHaveValues = isNotBlank(resDate) &&
-            isNotBlank(resTime) &&
-            resGuests > 0 &&
-            isNotBlank(resOccasion);
-        setValid(allFieldsHaveValues);
+        const validFieldValues = checkValidFieldValues({
+            resDate,
+            resTime,
+            resGuests,
+            resOccasion
+        })
+        setValid(validFieldValues);
     }, [resDate, resTime, resGuests, resOccasion]);
 
     return (
@@ -191,6 +193,19 @@ function Reservations(props) {
             </div>
             )
         </div>)
+}
+
+export function checkValidFieldValues(fieldValues) {
+    const {
+        resDate,
+        resTime,
+        resGuests,
+        resOccasion
+    } = fieldValues;
+    return isNotBlank(resDate) &&
+        isNotBlank(resTime) &&
+        resGuests > 0 &&
+        isNotBlank(resOccasion);
 }
 
 export default Reservations;
