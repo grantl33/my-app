@@ -37,7 +37,7 @@ function Footer() {
                         <p>
                             <strong>Note:</strong> This is a fictional website
                             for demonstration purposes only.
-                            It is from of the capstone project
+                            It is from the capstone project
                             in the <a href="https://www.coursera.org/professional-certificates/meta-front-end-developer"
                                 target="_blank" rel="noreferrer">Meta Front-End Developer Professional Certificate</a> program
                             and it was built using
