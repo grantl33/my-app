@@ -85,6 +85,39 @@
           "role": "anonymous"
         }
       ]
+    },
+    "Creators": {
+      "source": "dbo.Creators",
+      "permissions": [
+        {
+          "actions": [
+            "*"
+          ],
+          "role": "anonymous"
+        }
+      ]
+    },
+    "EpisodesByComicId": {
+      "source": {
+        "type": "stored-procedure",
+        "object": "dbo.EpisodesByComicId",
+        "parameters": {
+          "ComicId": "ComicId"
+        }
+      },
+      "rest": {
+        "methods": [
+          "get"
+        ]
+      },
+      "permissions": [
+        {
+          "role": "anonymous",
+          "actions": [
+            "execute"
+          ]
+        }
+      ]
     }
   }
 }
