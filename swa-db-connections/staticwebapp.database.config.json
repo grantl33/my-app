@@ -74,6 +74,17 @@
           "role": "anonymous"
         }
       ]
+    },
+    "Comics": {
+      "source": "dbo.ComicsView",
+      "permissions": [
+        {
+          "actions": [
+            "*"
+          ],
+          "role": "anonymous"
+        }
+      ]
     }
   }
 }
